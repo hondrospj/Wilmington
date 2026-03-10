@@ -27,10 +27,10 @@ const path = require("path");
 // -------------------------
 const CACHE_PATH = path.join(__dirname, "..", "data", "peaks_navd88.json");
 
-const NOAA_OBS_STATION = "8536110";      // Cape May NOAA observations
-const NOAA_TIDECLOCK_STATION = "8536110"; // use Cape May NOAA highs too
+const NOAA_OBS_STATION = "8550714";      // Cape May NOAA observations
+const NOAA_TIDECLOCK_STATION = "8550714"; // use Cape May NOAA highs too
 const NOAA_OBS_DATUM = "NAVD";
-const NAVD_MINUS_MLLW = -3.27;
+const NAVD_MINUS_MLLW = -2.75;
 
 // Keep this in cache for transparency; we still keep your 5-hour constant in JSON,
 // but we are no longer using declustering for cache building under this method.
