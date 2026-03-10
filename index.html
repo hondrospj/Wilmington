@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title> Cape May , NJ — Tidal Flooding Dashboard</title>
+  <title> Wilmington , NJ — Tidal Flooding Dashboard</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <!-- Leaflet (map) -->
@@ -920,8 +920,8 @@ a.brand *{
       </div>
 
       <div class="brandTitle">
-        <div class="kicker">USGS 01413038 ·  Cape May , NJ</div>
-        <div class="name"> Cape May  Tidal  Dashboard</div>
+        <div class="kicker">USGS 8550714 ·  Wilmington , NJ</div>
+        <div class="name"> Wilmington  Tidal  Dashboard</div>
       </div>
     </a>
 
@@ -1300,12 +1300,16 @@ let DISPLAY_DATUM = "MLLW"; // MLLW | NAVD88 | MSL | MHHW
 
 const DATUMS = ["MLLW", "NAVD88", "MSL", "MHHW"]; // cycle order
 
-// From  table (Gauge Zero row): datum = MLLW + offset
+/* =========================================
+   8) Wilmington
+========================================= */
+
+// From table (Gauge Zero row): datum = MLLW + offset
 const OFFSET_FROM_MLLW = {
   MLLW:   0.00,
-  NAVD88: -3.27,
-  MSL:    -3.15,
-  MHHW:   -6.43
+  NAVD88: -2.75,
+  MSL:    -2.99,
+  MHHW:   -5.91
 };
 
 function mllwToDatum(ft, datum){
@@ -1318,16 +1322,12 @@ function datumToDatum(ft, fromDatum, toDatum){
   const mllw = datumToMllw(ft, fromDatum);
   return mllwToDatum(mllw, toDatum);
 }
-    // Convenience helpers (you reference these later)
 function mllwToNavd(mllwFt){
   return datumToDatum(mllwFt, "MLLW", "NAVD88");
 }
 function navdToMllw(navdFt){
   return datumToDatum(navdFt, "NAVD88", "MLLW");
 }
-
-
-// Helpers used across the app ( internal truth stays NAVD88 where needed)
 function toDisplayFtFromNavd(navdFt){
   return datumToDatum(navdFt, "NAVD88", DISPLAY_DATUM);
 }
@@ -1338,34 +1338,29 @@ function fromDisplayToNavd(displayFt){
   return datumToDatum(displayFt, DISPLAY_DATUM, "NAVD88");
 }
 
-
-/* =========================================
-   1) Cohancey River at Cape May
-========================================= */
-
 /* NOAA observed + predicted */
-const NOAA_OBS_STATION = "8536110";
+const NOAA_OBS_STATION = "8550714";
 
-const COOPS_STATION = "8536110";
+const COOPS_STATION = "8550714";
 const COOPS_APP = "cupajoe.live";
 const COOPS_DATUM = "MLLW";
 const COOPS_INTERVAL = "6";
 const COOPS_TZ = "gmt";
 
 /* Tide-clock settings for crest-anchored highs (NOAA hilo predictions) */
-const NOAA_STATION_TIDECLOCK = "8536110";
+const NOAA_STATION_TIDECLOCK = "8550714";
 const CREST_WINDOW_HOURS = 2;
 const REQUIRE_WITHIN_HOURS = 1;
 
 /* Flood thresholds */
 const THRESH = {
-  MLLW:  { minorLow:7.20, moderateLow:8.20, majorLow:9.20 },
-  NAVD88:{ minorLow:3.93, moderateLow:4.93, majorLow:5.93 },
-  MSL:   { minorLow:4.05, moderateLow:5.05, majorLow:6.05 },
-  MHHW:  { minorLow:0.77, moderateLow:1.77, majorLow:2.77 }
+  MLLW:  { minorLow:7.40, moderateLow:8.40, majorLow:9.40 },
+  NAVD88:{ minorLow:4.65, moderateLow:5.65, majorLow:6.65 },
+  MSL:   { minorLow:4.41, moderateLow:5.41, majorLow:6.41 },
+  MHHW:  { minorLow:1.49, moderateLow:2.49, majorLow:3.49 }
 };
 
-      const HOUR_MS = 60 * 60 * 1000;
+const HOUR_MS = 60 * 60 * 1000;
 
 function floorToHourMs(tMs){
   return Math.floor(tMs / HOUR_MS) * HOUR_MS;
@@ -1431,7 +1426,7 @@ const TOP_TEN_MLLW = [
     /* =========================
 MAP — Leaflet gauge map
 ========================= */
-const DEFAULT_GAUGE_ID = "01413038"; //  Cape May  USGS
+const DEFAULT_GAUGE_ID = "8550714"; //  Wilmington  USGS
 const DEFAULT_GAUGE_ZOOM = 12;       // adjust if you want closer (13 = tighter)
 // Edit these whenever you want (lat/lon + label + link)
 const GAUGES = [
@@ -1524,7 +1519,7 @@ function ensureGaugeMap(){
     bounds.push([g.lat, g.lon]);
   }
 
-// Default view =  Cape May  gauge
+// Default view =  Wilmington  gauge
 const def = GAUGES.find(g => String(g.id) === DEFAULT_GAUGE_ID);
 
 if(def){
